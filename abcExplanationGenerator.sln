@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "abcExplanationGenerator", "abcExplanationGenerator\abcExplanationGenerator.csproj", "{AFA6789F-FAD6-48CF-9630-C30FF928B156}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFA6789F-FAD6-48CF-9630-C30FF928B156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA6789F-FAD6-48CF-9630-C30FF928B156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA6789F-FAD6-48CF-9630-C30FF928B156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA6789F-FAD6-48CF-9630-C30FF928B156}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

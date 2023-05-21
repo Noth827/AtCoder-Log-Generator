@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zvDtffgkBA3+WwEJIQrbErb9pV6iNvmcne8Kn2BYDYk6lIMwC7RKSQYKgvR0w3Ee/o2QZ+pIZp9EFX5KuaMivg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Halu\\Documents\\MyProjects\\abcExplanationGenerator\\abcExplanationGenerator\\abcExplanationGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Halu\\.nuget\\packages\\anglesharp\\1.0.2-alpha-281\\anglesharp.1.0.2-alpha-281.nupkg.sha512",
+    "C:\\Users\\Halu\\.nuget\\packages\\system.text.encoding.codepages\\7.0.0\\system.text.encoding.codepages.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
