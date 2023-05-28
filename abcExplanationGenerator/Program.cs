@@ -8,40 +8,61 @@ var select = int.Parse(Console.ReadLine() ?? string.Empty);
 switch (select)
 {
     case 1:
-        GenerateTemplate();
+        await GenerateTemplate();
         break;
     case 2:
         TexConverter.Convert();
         break;
 }
 
-async void GenerateTemplate()
+async Task GenerateTemplate()
 {
     Console.Write("書きたいABCの番号を記入してください : ");
     var abcNumber = int.Parse(Console.ReadLine() ?? string.Empty);
     Console.Write("何番まで書きますか？(a,b,c,d,e,f,g,h) : ");
-    var problemLimit = Console.ReadLine()[0];
+    var problemLimit = Console.ReadLine()![0];
 
     #region Webスクレイピング
 
-// example: https://atcoder.jp/contests/abc302/tasks/abc302_a
+    // example: https://atcoder.jp/contests/abc302/tasks/abc302_a
     var problemSetUrl = $"https://atcoder.jp/contests/abc{abcNumber}/tasks/abc{abcNumber}_";
     var allProblems = new string[] { "a", "b", "c", "d", "e", "f", "g", "h" };
     var problemSetUrls = allProblems.Where((_, index) => index <= problemLimit - 'a').Select(x => problemSetUrl + x)
         .ToList();
-    Console.WriteLine("以下のUrlから取得します : " + problemSetUrl);
+    Console.WriteLine("以下のUrlから取得します : " + problemSetUrls[0]);
 
     IHtmlDocument doc;
     var content = "";
+    var client = new HttpClient();
+
     foreach (var url in problemSetUrls)
     {
-        using (var client = new HttpClient())
-        await using (var stream = await client.GetStreamAsync(new Uri(url)))
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
-            var parser = new HtmlParser();
-            doc = await parser.ParseDocumentAsync(stream);
-            content += $"# [{doc.Title}]({url})\n \n" +
-                       $"## 問題概要\n \n";
+            Console.WriteLine("不正なURLです: " + uri);
+            continue;
+        }
+
+        try
+        {
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            await using (var stream = await response.Content.ReadAsStreamAsync())
+            {
+                var parser = new HtmlParser();
+                doc = await parser.ParseDocumentAsync(stream);
+                content += $"# [{doc.Title}]({url})\n \n" +
+                           $"## 問題概要\n \n";
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Httpエラーが発生しました: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("エラーが発生しました: " + ex.Message);
         }
     }
 
@@ -66,6 +87,13 @@ async void GenerateTemplate()
     }
 
     Console.WriteLine("ファイルの生成が完了しました");
+    
+    Dispose(client);
 
     #endregion
+
+    void Dispose(IDisposable cli)
+    {
+        cli.Dispose();
+    }
 }
